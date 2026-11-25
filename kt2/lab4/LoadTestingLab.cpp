@@ -12,8 +12,8 @@
 
 using namespace std::chrono;
 
-// --- 1. Ýìóëÿöèÿ öåëåâîé ñèñòåìû (Target System) ---
-// Èìèòèðóåì îáðàùåíèå ê ÁÄ èëè âûçîâ âíåøíåãî API
+// --- 1. Эмуляция целевой системы (Target System) ---
+// Имитируем обращение к БД или вызов внешнего API
 bool simulate_network_request() {
     thread_local std::mt19937 generator(std::random_device{}());
     std::uniform_int_distribution<int> distribution(10, 50);
@@ -21,17 +21,17 @@ bool simulate_network_request() {
     int delay = distribution(generator);
     std::this_thread::sleep_for(milliseconds(delay));
 
-    // Èìèòèðóåì âåðîÿòíîñòü îøèáêè (HTTP 500)
+    // Имитируем вероятность ошибки (HTTP 500)
     return distribution(generator) > 12;
 }
 
-// --- 2. Ãëîáàëüíûå ñ÷¸ò÷èêè ìåòðèê ---
+// --- 2. Глобальные счётчики метрик ---
 std::atomic<int> successful_requests(0);
 std::atomic<int> failed_requests(0);
 std::mutex latencies_mutex;
 std::vector<double> latencies;
 
-// --- 3. Ëîãèêà âèðòóàëüíîãî ïîëüçîâàòåëÿ (Worker) --- 
+// --- 3. Логика виртуального пользователя (Worker) ---
 void load_worker(int requests_per_thread) {
     std::vector<double> local_latencies;
     local_latencies.reserve(requests_per_thread);
@@ -48,8 +48,7 @@ void load_worker(int requests_per_thread) {
 
         if (success) {
             successful_requests++;
-        }
-        else {
+        } else {
             failed_requests++;
         }
     }
@@ -58,7 +57,7 @@ void load_worker(int requests_per_thread) {
     latencies.insert(latencies.end(), local_latencies.begin(), local_latencies.end());
 }
 
-// --- 4. Êîîðäèíàòîð íàãðóçî÷íîãî òåñòèðîâàíèÿ ---
+// --- 4. Координатор нагрузочного тестирования ---
 void run_load_test(
     const std::string& title,
     int num_threads,
@@ -79,7 +78,7 @@ void run_load_test(
     std::cout << "Requests per User:       " << requests_per_thread << "\n";
     std::cout << "Total Requests planned:  " << total_requests << "\n";
     if (ramp_up_ms > 0) {
-        std::cout << "Ramp-up step:            " << ramp_up_ms << " ms (îæèäàéòå ~55 ñåê...)\n";
+        std::cout << "Ramp-up step:            " << ramp_up_ms << " ms (ожидайте ~55 сек...)\n";
     }
     std::cout << "\n";
 
@@ -101,16 +100,16 @@ void run_load_test(
     auto test_end = high_resolution_clock::now();
     duration<double> test_duration = test_end - test_start;
 
-    // --- 5. Àíàëèç è âûâîä ðåçóëüòàòîâ ---
+    // --- 5. Анализ и вывод результатов ---
     double avg_latency = std::accumulate(latencies.begin(), latencies.end(), 0.0) / latencies.size();
     double tps = successful_requests.load() / test_duration.count();
 
-    std::cout << "=== Ðåçóëüòàòû íàãðóçî÷íîãî òåñòà ===\n";
-    std::cout << "Âðåìÿ âûïîëíåíèÿ:              " << test_duration.count() << " ñåêóíä\n";
-    std::cout << "Óñïåøíûå çàïðîñû:              " << successful_requests.load() << "\n";
-    std::cout << "Íåóäà÷íûå çàïðîñû:             " << failed_requests.load() << "\n";
-    std::cout << "Ïðîïóñêíàÿ ñïîñîáíîñòü (TPS):  " << tps << " çàïðîñîâ/ñåê\n";
-    std::cout << "Ñðåäíÿÿ çàäåðæêà:              " << avg_latency << " ìñ\n";
+    std::cout << "=== Результаты нагрузочного теста ===\n";
+    std::cout << "Время выполнения:              " << test_duration.count() << " секунд\n";
+    std::cout << "Успешные запросы:              " << successful_requests.load() << "\n";
+    std::cout << "Неудачные запросы:             " << failed_requests.load() << "\n";
+    std::cout << "Пропускная способность (TPS):  " << tps << " запросов/сек\n";
+    std::cout << "Средняя задержка:              " << avg_latency << " мс\n";
 
     if (show_percentiles && !latencies.empty()) {
         std::sort(latencies.begin(), latencies.end());
@@ -120,8 +119,8 @@ void run_load_test(
         if (index95 >= latencies.size()) index95 = latencies.size() - 1;
         if (index99 >= latencies.size()) index99 = latencies.size() - 1;
 
-        std::cout << "P95 çàäåðæêà:                  " << latencies[index95] << " ìñ\n";
-        std::cout << "P99 çàäåðæêà:                  " << latencies[index99] << " ìñ\n";
+        std::cout << "P95 задержка:                  " << latencies[index95] << " мс\n";
+        std::cout << "P99 задержка:                  " << latencies[index99] << " мс\n";
     }
 
     std::cout << "\n";
@@ -131,22 +130,22 @@ int main() {
     setlocale(LC_ALL, "");
 
 #ifdef _DEBUG
-    std::cout << "[Êîíôèãóðàöèÿ ñáîðêè: DEBUG]\n\n";
+    std::cout << "[Конфигурация сборки: DEBUG]\n\n";
 #else
-    std::cout << "[Êîíôèãóðàöèÿ ñáîðêè: RELEASE]\n\n";
+    std::cout << "[Конфигурация сборки: RELEASE]\n\n";
 #endif
 
-    // Áàçîâûé òåñò (50 ïîòîêîâ)
-    run_load_test("Òåñò 0: Áàçîâûé (50 ïîòîêîâ)", 50, 20, false, 0);
+    // Базовый тест (50 потоков)
+    run_load_test("Тест 0: Базовый (50 потоков)", 50, 20, false, 0);
 
-    // Çàäàíèå 1: Ìàñøòàáèðóåìîñòü (500 ïîòîêîâ)
-    run_load_test("Òåñò 1: Ìàñøòàáèðóåìîñòü (500 ïîòîêîâ)", 500, 20, false, 0);
+    // Задание 1: Масштабируемость (500 потоков)
+    run_load_test("Тест 1: Масштабируемость (500 потоков)", 500, 20, false, 0);
 
-    // Çàäàíèå 2: Ðàñ÷¸ò ïåðöåíòèëåé P95 è P99 (500 ïîòîêîâ)
-    run_load_test("Òåñò 2: Ðàñ÷¸ò ïåðöåíòèëåé P95 è P99 (500 ïîòîêîâ)", 500, 20, true, 0);
+    // Задание 2: Расчёт перцентилей P95 и P99 (500 потоков)
+    run_load_test("Тест 2: Расчёт перцентилей P95 и P99 (500 потоков)", 500, 20, true, 0);
 
-    // Çàäàíèå 3: Ìåõàíèçì Ramp-up (500 ïîòîêîâ, øàã 100 ìñ)
-    run_load_test("Òåñò 3: Ìåõàíèçì Ramp-up (500 ïîòîêîâ, øàã 100 ìñ)", 500, 20, true, 100);
+    // Задание 3: Механизм Ramp-up (500 потоков, шаг 100 мс)
+    run_load_test("Тест 3: Механизм Ramp-up (500 потоков, шаг 100 мс)", 500, 20, true, 100);
 
     return 0;
 }
