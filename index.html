@@ -115,6 +115,38 @@
     </div>
   </div>
 
+  <!-- Модальное окно онлайн-просмотра отчётов (.docx) -->
+  <div id="doc-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/70 backdrop-blur-sm p-3 sm:p-5">
+    <div class="w-full max-w-5xl h-[90vh] flex flex-col rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between gap-3 px-5 py-3 border-b border-slate-200 dark:border-slate-800">
+        <div class="min-w-0">
+          <h3 id="doc-modal-title" class="text-sm font-semibold truncate"></h3>
+          <p id="doc-modal-path" class="font-mono text-xs text-slate-500 dark:text-slate-400 truncate"></p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a id="doc-modal-download" href="#" download
+             class="px-3 py-1.5 rounded-lg text-xs font-medium border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            Скачать
+          </a>
+          <a id="doc-modal-external" href="#" target="_blank" rel="noopener noreferrer"
+             class="px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition">
+            В новой вкладке ↗
+          </a>
+          <button id="doc-modal-close" type="button" aria-label="Закрыть"
+                  class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+            ✕
+          </button>
+        </div>
+      </div>
+      <div class="relative flex-1 bg-slate-100 dark:bg-slate-950">
+        <iframe id="doc-modal-iframe" class="w-full h-full border-0" title="Онлайн-просмотр отчёта"></iframe>
+      </div>
+      <div class="px-4 py-2 text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900">
+        Просмотр через Microsoft Office Online работает после публикации файла в публичном репозитории GitHub.
+      </div>
+    </div>
+  </div>
+
   <script src="static/js/main.js"></script>
 </body>
 </html>
