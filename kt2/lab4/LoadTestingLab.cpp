@@ -12,8 +12,8 @@
 
 using namespace std::chrono;
 
-// --- 1. Эмуляция целевой системы (Target System) ---
-// Имитируем обращение к БД или вызов внешнего API
+// --- 1. ГќГ¬ГіГ«ГїГ¶ГЁГї Г¶ГҐГ«ГҐГўГ®Г© Г±ГЁГ±ГІГҐГ¬Г» (Target System) ---
+// Г€Г¬ГЁГІГЁГ°ГіГҐГ¬ Г®ГЎГ°Г Г№ГҐГ­ГЁГҐ ГЄ ГЃГ„ ГЁГ«ГЁ ГўГ»Г§Г®Гў ГўГ­ГҐГёГ­ГҐГЈГ® API
 bool simulate_network_request() {
     thread_local std::mt19937 generator(std::random_device{}());
     std::uniform_int_distribution<int> distribution(10, 50);
@@ -21,17 +21,17 @@ bool simulate_network_request() {
     int delay = distribution(generator);
     std::this_thread::sleep_for(milliseconds(delay));
 
-    // Имитируем вероятность ошибки (HTTP 500)
+    // Г€Г¬ГЁГІГЁГ°ГіГҐГ¬ ГўГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГёГЁГЎГЄГЁ (HTTP 500)
     return distribution(generator) > 12;
 }
 
-// --- 2. Глобальные счётчики метрик ---
+// --- 2. ГѓГ«Г®ГЎГ Г«ГјГ­Г»ГҐ Г±Г·ВёГІГ·ГЁГЄГЁ Г¬ГҐГІГ°ГЁГЄ ---
 std::atomic<int> successful_requests(0);
 std::atomic<int> failed_requests(0);
 std::mutex latencies_mutex;
 std::vector<double> latencies;
 
-// --- 3. Логика виртуального пользователя (Worker) ---
+// --- 3. Г‹Г®ГЈГЁГЄГ  ГўГЁГ°ГІГіГ Г«ГјГ­Г®ГЈГ® ГЇГ®Г«ГјГ§Г®ГўГ ГІГҐГ«Гї (Worker) --- 
 void load_worker(int requests_per_thread) {
     std::vector<double> local_latencies;
     local_latencies.reserve(requests_per_thread);
@@ -58,7 +58,7 @@ void load_worker(int requests_per_thread) {
     latencies.insert(latencies.end(), local_latencies.begin(), local_latencies.end());
 }
 
-// --- 4. Координатор нагрузочного тестирования ---
+// --- 4. ГЉГ®Г®Г°Г¤ГЁГ­Г ГІГ®Г° Г­Г ГЈГ°ГіГ§Г®Г·Г­Г®ГЈГ® ГІГҐГ±ГІГЁГ°Г®ГўГ Г­ГЁГї ---
 void run_load_test(
     const std::string& title,
     int num_threads,
@@ -79,7 +79,7 @@ void run_load_test(
     std::cout << "Requests per User:       " << requests_per_thread << "\n";
     std::cout << "Total Requests planned:  " << total_requests << "\n";
     if (ramp_up_ms > 0) {
-        std::cout << "Ramp-up step:            " << ramp_up_ms << " ms (ожидайте ~55 сек...)\n";
+        std::cout << "Ramp-up step:            " << ramp_up_ms << " ms (Г®Г¦ГЁГ¤Г Г©ГІГҐ ~55 Г±ГҐГЄ...)\n";
     }
     std::cout << "\n";
 
@@ -101,16 +101,16 @@ void run_load_test(
     auto test_end = high_resolution_clock::now();
     duration<double> test_duration = test_end - test_start;
 
-    // --- 5. Анализ и вывод результатов ---
+    // --- 5. ГЂГ­Г Г«ГЁГ§ ГЁ ГўГ»ГўГ®Г¤ Г°ГҐГ§ГіГ«ГјГІГ ГІГ®Гў ---
     double avg_latency = std::accumulate(latencies.begin(), latencies.end(), 0.0) / latencies.size();
     double tps = successful_requests.load() / test_duration.count();
 
-    std::cout << "=== Результаты нагрузочного теста ===\n";
-    std::cout << "Время выполнения:              " << test_duration.count() << " секунд\n";
-    std::cout << "Успешные запросы:              " << successful_requests.load() << "\n";
-    std::cout << "Неудачные запросы:             " << failed_requests.load() << "\n";
-    std::cout << "Пропускная способность (TPS):  " << tps << " запросов/сек\n";
-    std::cout << "Средняя задержка:              " << avg_latency << " мс\n";
+    std::cout << "=== ГђГҐГ§ГіГ«ГјГІГ ГІГ» Г­Г ГЈГ°ГіГ§Г®Г·Г­Г®ГЈГ® ГІГҐГ±ГІГ  ===\n";
+    std::cout << "Г‚Г°ГҐГ¬Гї ГўГ»ГЇГ®Г«Г­ГҐГ­ГЁГї:              " << test_duration.count() << " Г±ГҐГЄГіГ­Г¤\n";
+    std::cout << "Г“Г±ГЇГҐГёГ­Г»ГҐ Г§Г ГЇГ°Г®Г±Г»:              " << successful_requests.load() << "\n";
+    std::cout << "ГЌГҐГіГ¤Г Г·Г­Г»ГҐ Г§Г ГЇГ°Г®Г±Г»:             " << failed_requests.load() << "\n";
+    std::cout << "ГЏГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј (TPS):  " << tps << " Г§Г ГЇГ°Г®Г±Г®Гў/Г±ГҐГЄ\n";
+    std::cout << "Г‘Г°ГҐГ¤Г­ГїГї Г§Г Г¤ГҐГ°Г¦ГЄГ :              " << avg_latency << " Г¬Г±\n";
 
     if (show_percentiles && !latencies.empty()) {
         std::sort(latencies.begin(), latencies.end());
@@ -120,8 +120,8 @@ void run_load_test(
         if (index95 >= latencies.size()) index95 = latencies.size() - 1;
         if (index99 >= latencies.size()) index99 = latencies.size() - 1;
 
-        std::cout << "P95 задержка:                  " << latencies[index95] << " мс\n";
-        std::cout << "P99 задержка:                  " << latencies[index99] << " мс\n";
+        std::cout << "P95 Г§Г Г¤ГҐГ°Г¦ГЄГ :                  " << latencies[index95] << " Г¬Г±\n";
+        std::cout << "P99 Г§Г Г¤ГҐГ°Г¦ГЄГ :                  " << latencies[index99] << " Г¬Г±\n";
     }
 
     std::cout << "\n";
@@ -131,22 +131,22 @@ int main() {
     setlocale(LC_ALL, "");
 
 #ifdef _DEBUG
-    std::cout << "[Конфигурация сборки: DEBUG]\n\n";
+    std::cout << "[ГЉГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГї Г±ГЎГ®Г°ГЄГЁ: DEBUG]\n\n";
 #else
-    std::cout << "[Конфигурация сборки: RELEASE]\n\n";
+    std::cout << "[ГЉГ®Г­ГґГЁГЈГіГ°Г Г¶ГЁГї Г±ГЎГ®Г°ГЄГЁ: RELEASE]\n\n";
 #endif
 
-    // Базовый тест (50 потоков)
-    run_load_test("Тест 0: Базовый (50 потоков)", 50, 20, false, 0);
+    // ГЃГ Г§Г®ГўГ»Г© ГІГҐГ±ГІ (50 ГЇГ®ГІГ®ГЄГ®Гў)
+    run_load_test("Г’ГҐГ±ГІ 0: ГЃГ Г§Г®ГўГ»Г© (50 ГЇГ®ГІГ®ГЄГ®Гў)", 50, 20, false, 0);
 
-    // Задание 1: Масштабируемость (500 потоков)
-    run_load_test("Тест 1: Масштабируемость (500 потоков)", 500, 20, false, 0);
+    // Г‡Г Г¤Г Г­ГЁГҐ 1: ГЊГ Г±ГёГІГ ГЎГЁГ°ГіГҐГ¬Г®Г±ГІГј (500 ГЇГ®ГІГ®ГЄГ®Гў)
+    run_load_test("Г’ГҐГ±ГІ 1: ГЊГ Г±ГёГІГ ГЎГЁГ°ГіГҐГ¬Г®Г±ГІГј (500 ГЇГ®ГІГ®ГЄГ®Гў)", 500, 20, false, 0);
 
-    // Задание 2: Расчёт перцентилей P95 и P99 (500 потоков)
-    run_load_test("Тест 2: Расчёт перцентилей P95 и P99 (500 потоков)", 500, 20, true, 0);
+    // Г‡Г Г¤Г Г­ГЁГҐ 2: ГђГ Г±Г·ВёГІ ГЇГҐГ°Г¶ГҐГ­ГІГЁГ«ГҐГ© P95 ГЁ P99 (500 ГЇГ®ГІГ®ГЄГ®Гў)
+    run_load_test("Г’ГҐГ±ГІ 2: ГђГ Г±Г·ВёГІ ГЇГҐГ°Г¶ГҐГ­ГІГЁГ«ГҐГ© P95 ГЁ P99 (500 ГЇГ®ГІГ®ГЄГ®Гў)", 500, 20, true, 0);
 
-    // Задание 3: Механизм Ramp-up (500 потоков, шаг 100 мс)
-    run_load_test("Тест 3: Механизм Ramp-up (500 потоков, шаг 100 мс)", 500, 20, true, 100);
+    // Г‡Г Г¤Г Г­ГЁГҐ 3: ГЊГҐГµГ Г­ГЁГ§Г¬ Ramp-up (500 ГЇГ®ГІГ®ГЄГ®Гў, ГёГ ГЈ 100 Г¬Г±)
+    run_load_test("Г’ГҐГ±ГІ 3: ГЊГҐГµГ Г­ГЁГ§Г¬ Ramp-up (500 ГЇГ®ГІГ®ГЄГ®Гў, ГёГ ГЈ 100 Г¬Г±)", 500, 20, true, 100);
 
     return 0;
 }
