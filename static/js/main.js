@@ -5,7 +5,6 @@ const SITE_CONFIG = {
   student: 'Антипов Андрей Олегович',
   group: 'ИВТ-231',
   supervisor: 'Лавлинская О.Ю.',
-  university: 'ВИВТ · 2026',
 
   checkpoints: [
     {
@@ -22,13 +21,10 @@ const SITE_CONFIG = {
           variant: 'Задача A. ИИ',
           status: 'done',
           folder: 'kt1/lab1',
+          report: { name: 'Отчет лаб1.docx', path: 'kt1/Отчет лаб1.docx' },
           description:
             'Анализ исходного кода методом предугадывания ошибок (Error Guessing), составление журнала дефектов, добавление валидации ввода и обработки исключения ValueError.',
           tags: ['Python', 'Error Guessing', 'Отладка'],
-          report: {
-            name: 'Отчет лаб1.docx',
-            path: 'kt1/Отчет лаб1.docx',
-          },
           files: [
             { name: 'main.py', path: 'kt1/lab1/main.py', desc: 'Исправленный исходный код программы' },
           ],
@@ -40,13 +36,10 @@ const SITE_CONFIG = {
           variant: 'Вариант 1 (ComplexNumber) · Вариант 5 (ShoppingCart)',
           status: 'done',
           folder: 'kt1/lab2',
+          report: { name: 'Отчет лаб2.docx', path: 'kt1/Отчет лаб2.docx' },
           description:
             'Реализация классов ComplexNumber и ShoppingCart и автоматизация модульного тестирования на базе unittest. Все 9 тестов успешно пройдены (OK).',
           tags: ['Python', 'unittest', '9 тестов OK'],
-          report: {
-            name: 'Отчет лаб2.docx',
-            path: 'kt1/Отчет лаб2.docx',
-          },
           files: [
             { name: 'complex_number.py', path: 'kt1/lab2/complex_number.py', desc: 'Класс комплексного числа' },
             { name: 'test_complex_number.py', path: 'kt1/lab2/test_complex_number.py', desc: 'Модульные тесты ComplexNumber' },
@@ -70,13 +63,10 @@ const SITE_CONFIG = {
           variant: 'Граф потока управления main.py (ЦС = 4)',
           status: 'done',
           folder: 'kt2/lab3',
+          report: { name: 'Отчет лаб3.docx', path: 'kt2/Отчет лаб3.docx' },
           description:
-            'Представление модуля main.py в виде ориентированного SESE-графа (7 вершин, 9 рёбер), расчёт цикломатической сложности, тестовая документация по ГОСТ Р 56922—2016 и автотесты (6/6 OK).',
-          tags: ['Python', 'Графы', 'ГОСТ', '6 тестов OK'],
-          report: {
-            name: 'Отчет лаб3.docx',
-            path: 'kt2/Отчет лаб3.docx',
-          },
+            'Построение SESE-графа (7 вершин, 9 рёбер), расчёт цикломатической сложности, тестовая документация по ГОСТ Р 56922—2016 и 100% покрытие основных путей (6/6 тестов OK).',
+          tags: ['Python', 'unittest', 'Графы', 'ГОСТ'],
           files: [
             { name: 'main.py', path: 'kt2/lab3/main.py', desc: 'Тестируемый модуль из ЛР №1' },
             { name: 'test_main_grah.py', path: 'kt2/lab3/test_main_grah.py', desc: 'Автотесты покрытия путей графа' },
@@ -89,18 +79,15 @@ const SITE_CONFIG = {
           variant: 'Многопоточный генератор нагрузки LoadTestingLab',
           status: 'done',
           folder: 'kt2/lab4',
+          report: { name: 'Отчет лаб4.docx', path: 'kt2/Отчет лаб4.docx' },
           description:
-            'Замер пропускной способности (TPS), средней задержки и перцентилей P95/P99 при 50 и 500 потоках, реализация Ramp-up (100 мс) и сравнение конфигураций Debug и Release.',
-          tags: ['C++14', 'Visual Studio', 'TPS / P95 / P99'],
-          report: {
-            name: 'Отчет лаб4.docx',
-            path: 'kt2/Отчет лаб4.docx',
-          },
+            'Замер TPS, средней задержки и перцентилей P95/P99 при 50 и 500 потоках, реализация Ramp-up (100 мс) и сравнение сборок Debug и Release.',
+          tags: ['C++14', 'Multithreading', 'TPS / P95 / P99'],
           files: [
             { name: 'LoadTestingLab.cpp', path: 'kt2/lab4/LoadTestingLab.cpp', desc: 'Исходный код генератора нагрузки' },
             { name: 'LoadTestingLab.sln', path: 'kt2/lab4/LoadTestingLab.sln', desc: 'Файл решения Visual Studio' },
-            { name: 'LoadTestingLab.vcxproj', path: 'kt2/lab4/LoadTestingLab.vcxproj', desc: 'Конфигурация проекта C++' },
-            { name: 'LoadTestingLab.vcxproj.filters', path: 'kt2/lab4/LoadTestingLab.vcxproj.filters', desc: 'Фильтры обозревателя решений' },
+            { name: 'LoadTestingLab.vcxproj', path: 'kt2/lab4/LoadTestingLab.vcxproj', desc: 'Конфигурация проекта VS' },
+            { name: 'LoadTestingLab.vcxproj.filters', path: 'kt2/lab4/LoadTestingLab.vcxproj.filters', desc: 'Фильтры проекта VS' },
           ],
         },
       ],
@@ -108,9 +95,31 @@ const SITE_CONFIG = {
     {
       id: 'kt3',
       title: 'Контрольная точка 3',
-      subtitle: 'Ожидается публикация задания',
-      status: 'planned',
+      subtitle: 'UI-тестирование пользовательского интерфейса',
+      status: 'in_progress',
       folder: 'kt3',
+      labs: [
+        {
+          id: 'lab5',
+          number: 'Лабораторная работа №5',
+          title: 'UI-тестирование пользовательского интерфейса',
+          variant: 'Ручное тестирование веб-формы (10 тестовых сценариев)',
+          status: 'in_progress',
+          folder: 'kt3/lab5',
+          report: null,
+          description:
+            'Выбор пользовательского интерфейса и формы, разработка 10 тестовых сценариев, проведение ручного UI-тестирования, составление отчёта и анализ выявленных дефектов.',
+          tags: ['UI-тестирование', 'Manual QA', '10 сценариев'],
+          files: [],
+        },
+      ],
+    },
+    {
+      id: 'kt4',
+      title: 'Контрольная точка 4',
+      subtitle: 'Ожидается публикация заданий (количество лабораторных уточняется)',
+      status: 'planned',
+      folder: 'kt4',
       labs: [],
     },
   ],
@@ -122,7 +131,7 @@ const STATUS_META = {
     classes: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800',
   },
   in_progress: {
-    label: 'В работе',
+    label: 'В процессе',
     classes: 'bg-amber-100 text-amber-800 dark:bg-amber-950/70 dark:text-amber-300 border border-amber-200 dark:border-amber-800',
   },
   planned: {
@@ -130,6 +139,7 @@ const STATUS_META = {
     classes: 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-slate-200 dark:border-slate-700',
   },
 };
+
 const state = {
   activeTab: 'all',
   query: '',
@@ -147,6 +157,18 @@ function githubTreeUrl(path) {
   return `${githubRepoUrl()}/tree/${SITE_CONFIG.branch}/${encodeURI(path)}`;
 }
 
+function githubRawUrl(path) {
+  return `https://raw.githubusercontent.com/${SITE_CONFIG.githubUser}/${SITE_CONFIG.repoName}/${SITE_CONFIG.branch}/${encodeURI(path)}`;
+}
+
+function officeViewerEmbedUrl(path) {
+  return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(githubRawUrl(path))}`;
+}
+
+function officeViewerExternalUrl(path) {
+  return `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(githubRawUrl(path))}`;
+}
+
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -162,10 +184,10 @@ function renderHeaderAndStats() {
 
   const allLabs = SITE_CONFIG.checkpoints.flatMap((kt) => kt.labs);
   const doneLabs = allLabs.filter((l) => l.status === 'done').length;
-  const totalFiles = allLabs.reduce((sum, lab) => {
-    const reportCount = lab.report ? 1 : 0;
-    return sum + reportCount + lab.files.length;
-  }, 0);
+  const totalFiles = allLabs.reduce(
+    (sum, lab) => sum + lab.files.length + (lab.report ? 1 : 0),
+    0
+  );
 
   document.getElementById('stat-kts').textContent = SITE_CONFIG.checkpoints.length;
   document.getElementById('stat-labs').textContent = `${doneLabs} / ${allLabs.length}`;
@@ -240,7 +262,7 @@ function renderContent() {
     const labsHtml =
       filteredLabs.length > 0
         ? `
-          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mt-5 grid grid-cols-1 ${filteredLabs.length > 1 ? 'md:grid-cols-2' : ''} gap-4">
             ${filteredLabs.map((lab) => renderLabCard(lab)).join('')}
           </div>
         `
@@ -261,7 +283,7 @@ function renderContent() {
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(kt.subtitle)}</p>
           </div>
           ${
-            kt.status !== 'planned'
+            kt.status === 'done'
               ? `<a href="${githubTreeUrl(kt.folder)}" target="_blank" rel="noopener noreferrer"
                     class="text-xs font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
                     /${escapeHtml(kt.folder)}/ ↗
@@ -284,6 +306,12 @@ function renderContent() {
       openCodeModal(btn.dataset.previewName, btn.dataset.previewPath);
     });
   });
+
+  container.querySelectorAll('button[data-doc-path]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      openDocModal(btn.dataset.docName, btn.dataset.docPath);
+    });
+  });
 }
 
 function renderLabCard(lab) {
@@ -300,16 +328,23 @@ function renderLabCard(lab) {
     ? `
       <div class="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/70 dark:bg-indigo-950/30 px-3 py-2">
         <div class="flex items-center gap-2 min-w-0">
-          <span class="px-1.5 py-0.5 rounded bg-indigo-600/15 text-indigo-700 dark:text-indigo-300 font-mono text-[10px] font-bold shrink-0">DOCX</span>
-          <span class="text-xs font-medium truncate" title="${escapeHtml(lab.report.path)}">${escapeHtml(lab.report.name)}</span>
+          <span class="px-1.5 py-0.5 rounded bg-indigo-600/15 text-indigo-700 dark:text-indigo-300 font-mono text-[10px] font-bold">DOCX</span>
+          <span class="text-xs font-medium truncate" title="${escapeHtml(lab.report.name)}">${escapeHtml(lab.report.name)}</span>
         </div>
         <div class="flex items-center gap-1.5 shrink-0">
-          <a href="${encodeURI(lab.report.path)}" download
-             class="px-2.5 py-1 rounded-md text-[11px] font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition">
+          <button type="button"
+                  data-doc-name="${escapeHtml(lab.report.name)}"
+                  data-doc-path="${escapeHtml(lab.report.path)}"
+                  title="Открыть отчёт онлайн"
+                  class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-xs font-medium bg-indigo-600 text-white hover:bg-indigo-500 transition">
+            <span>👁</span><span>Просмотр</span>
+          </button>
+          <a href="${encodeURI(lab.report.path)}" download title="Скачать файл"
+             class="px-2.5 py-1 rounded-md text-xs font-medium border border-indigo-300 dark:border-indigo-800 bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 transition">
             Скачать
           </a>
-          <a href="${githubBlobUrl(lab.report.path)}" target="_blank" rel="noopener noreferrer" title="Открыть отчёт на GitHub"
-             class="px-2 py-1 rounded-md text-[11px] font-medium border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+          <a href="${githubBlobUrl(lab.report.path)}" target="_blank" rel="noopener noreferrer" title="Открыть на GitHub"
+             class="px-2 py-1 rounded-md text-xs border border-indigo-300 dark:border-indigo-800 bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 transition">
             ↗
           </a>
         </div>
@@ -320,7 +355,7 @@ function renderLabCard(lab) {
   const filesHtml =
     lab.files.length > 0
       ? `
-        <ul class="mt-3.5 space-y-2 border-t border-slate-100 dark:border-slate-800 pt-3">
+        <ul class="mt-3 space-y-2 border-t border-slate-200/70 dark:border-slate-800 pt-3">
           ${lab.files
             .map(
               (file) => `
@@ -331,7 +366,7 @@ function renderLabCard(lab) {
                 </div>
                 <div class="flex items-center gap-1.5 shrink-0">
                   <button type="button" data-preview-name="${escapeHtml(file.name)}" data-preview-path="${escapeHtml(file.path)}"
-                          class="px-2.5 py-1 rounded-md font-medium bg-slate-100 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white transition">
+                          class="px-2.5 py-1 rounded-md font-medium bg-slate-200/70 dark:bg-slate-800 hover:bg-indigo-600 hover:text-white transition">
                     Код
                   </button>
                   <a href="${githubBlobUrl(file.path)}" target="_blank" rel="noopener noreferrer" title="Открыть на GitHub"
@@ -345,7 +380,7 @@ function renderLabCard(lab) {
             .join('')}
         </ul>
       `
-      : `<div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs text-slate-400 italic">Файлы ещё не загружены в репозиторий</div>`;
+      : `<div class="mt-4 pt-3 border-t border-slate-200/70 dark:border-slate-800 text-xs text-slate-400 italic">Работа в процессе — файлы и отчёт будут добавлены позже</div>`;
 
   return `
     <div class="flex flex-col justify-between rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-950/40 p-4">
@@ -358,15 +393,17 @@ function renderLabCard(lab) {
         ${lab.variant ? `<p class="mt-1 text-xs font-medium text-slate-500 dark:text-slate-400">${escapeHtml(lab.variant)}</p>` : ''}
         <p class="mt-2.5 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">${escapeHtml(lab.description)}</p>
         <div class="mt-3 flex flex-wrap gap-1.5">${tagsHtml}</div>
-        ${reportHtml}
       </div>
-      ${filesHtml}
+      <div>
+        ${reportHtml}
+        ${filesHtml}
+      </div>
     </div>
   `;
 }
 
-// --- Модальное окно просмотра файлов ---
-const modal = document.getElementById('code-modal');
+// --- Модальное окно просмотра кода (UTF-8 + Windows-1251 fallback) ---
+const codeModal = document.getElementById('code-modal');
 const modalFilename = document.getElementById('modal-filename');
 const modalFilepath = document.getElementById('modal-filepath');
 const modalCode = document.getElementById('modal-code');
@@ -382,32 +419,38 @@ async function openCodeModal(name, path) {
   modalCode.textContent = 'Загрузка файла...';
   currentRawCode = '';
 
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+  codeModal.classList.remove('hidden');
+  codeModal.classList.add('flex');
 
   try {
     const resp = await fetch(encodeURI(path));
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-    const text = await resp.text();
+    const buffer = await resp.arrayBuffer();
+
+    // Пробуем UTF-8; если файл сохранён в Visual Studio как Windows-1251, декодируем через cp1251
+    let text;
+    try {
+      text = new TextDecoder('utf-8', { fatal: true }).decode(buffer);
+    } catch {
+      text = new TextDecoder('windows-1251').decode(buffer);
+    }
+
     currentRawCode = text;
     modalCode.textContent = text;
   } catch (err) {
     modalCode.textContent =
-      `Не удалось загрузить файл локально (${err.message}).\nОткройте его напрямую через кнопку «На GitHub ↗» или запустите локальный сервер (python app.py).`;
+      `Не удалось загрузить файл локально (${err.message}).\nОткройте его через кнопку «На GitHub ↗» или запустите локальный сервер (python app.py).`;
   }
 }
 
 function closeCodeModal() {
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
+  codeModal.classList.add('hidden');
+  codeModal.classList.remove('flex');
 }
 
 document.getElementById('modal-close').addEventListener('click', closeCodeModal);
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) closeCodeModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeCodeModal();
+codeModal.addEventListener('click', (e) => {
+  if (e.target === codeModal) closeCodeModal();
 });
 
 modalCopy.addEventListener('click', async () => {
@@ -419,6 +462,43 @@ modalCopy.addEventListener('click', async () => {
     setTimeout(() => (modalCopy.textContent = prev), 1500);
   } catch {
     modalCopy.textContent = 'Ошибка';
+  }
+});
+
+// --- Модальное окно онлайн-просмотра .docx ---
+const docModal = document.getElementById('doc-modal');
+const docModalTitle = document.getElementById('doc-modal-title');
+const docModalPath = document.getElementById('doc-modal-path');
+const docModalDownload = document.getElementById('doc-modal-download');
+const docModalExternal = document.getElementById('doc-modal-external');
+const docModalIframe = document.getElementById('doc-modal-iframe');
+
+function openDocModal(name, path) {
+  docModalTitle.textContent = name;
+  docModalPath.textContent = path;
+  docModalDownload.href = encodeURI(path);
+  docModalExternal.href = officeViewerExternalUrl(path);
+  docModalIframe.src = officeViewerEmbedUrl(path);
+
+  docModal.classList.remove('hidden');
+  docModal.classList.add('flex');
+}
+
+function closeDocModal() {
+  docModal.classList.add('hidden');
+  docModal.classList.remove('flex');
+  docModalIframe.src = 'about:blank';
+}
+
+document.getElementById('doc-modal-close').addEventListener('click', closeDocModal);
+docModal.addEventListener('click', (e) => {
+  if (e.target === docModal) closeDocModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (!codeModal.classList.contains('hidden')) closeCodeModal();
+    if (!docModal.classList.contains('hidden')) closeDocModal();
   }
 });
 
