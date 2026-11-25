@@ -11,7 +11,7 @@ const SITE_CONFIG = {
       id: 'kt1',
       title: 'Контрольная точка 1',
       subtitle: 'Интуитивное и модульное тестирование (Python)',
-      status: 'done',
+      status: 'checked',
       folder: 'kt1',
       labs: [
         {
@@ -19,7 +19,7 @@ const SITE_CONFIG = {
           number: 'Лабораторная работа №1',
           title: 'Применение методов интуитивного тестирования и отладки',
           variant: 'Задача A. ИИ',
-          status: 'done',
+          status: 'checked',
           folder: 'kt1/lab1',
           report: { name: 'Отчет лаб1.docx', path: 'kt1/Отчет лаб1.docx' },
           description:
@@ -34,7 +34,7 @@ const SITE_CONFIG = {
           number: 'Лабораторная работа №2',
           title: 'Модульное тестирование в программной среде',
           variant: 'Вариант 1 (ComplexNumber) · Вариант 5 (ShoppingCart)',
-          status: 'done',
+          status: 'checked',
           folder: 'kt1/lab2',
           report: { name: 'Отчет лаб2.docx', path: 'kt1/Отчет лаб2.docx' },
           description:
@@ -53,7 +53,7 @@ const SITE_CONFIG = {
       id: 'kt2',
       title: 'Контрольная точка 2',
       subtitle: 'Тестовое покрытие на графах и нагрузочное тестирование (Python / C++)',
-      status: 'done',
+      status: 'pending_review',
       folder: 'kt2',
       labs: [
         {
@@ -61,7 +61,7 @@ const SITE_CONFIG = {
           number: 'Лабораторная работа №3',
           title: 'Тестовое покрытие на графах',
           variant: 'Граф потока управления main.py (ЦС = 4)',
-          status: 'done',
+          status: 'pending_review',
           folder: 'kt2/lab3',
           report: { name: 'Отчет лаб3.docx', path: 'kt2/Отчет лаб3.docx' },
           description:
@@ -77,7 +77,7 @@ const SITE_CONFIG = {
           number: 'Лабораторная работа №4',
           title: 'Регрессионное и нагрузочное тестирование',
           variant: 'Многопоточный генератор нагрузки LoadTestingLab',
-          status: 'done',
+          status: 'pending_review',
           folder: 'kt2/lab4',
           report: { name: 'Отчет лаб4.docx', path: 'kt2/Отчет лаб4.docx' },
           description:
@@ -95,22 +95,24 @@ const SITE_CONFIG = {
     {
       id: 'kt3',
       title: 'Контрольная точка 3',
-      subtitle: 'UI-тестирование пользовательского интерфейса',
-      status: 'in_progress',
+      subtitle: 'UI-тестирование и автоматизация (Python, Selenium, Pytest)',
+      status: 'pending_review',
       folder: 'kt3',
       labs: [
         {
           id: 'lab5',
           number: 'Лабораторная работа №5',
-          title: 'UI-тестирование пользовательского интерфейса',
-          variant: 'Ручное тестирование веб-формы (10 тестовых сценариев)',
-          status: 'in_progress',
+          title: 'UI-тестирование и автоматизация тестирования веб-интерфейса',
+          variant: 'Стенд Swag Labs (saucedemo.com) · 10 сценариев',
+          status: 'pending_review',
           folder: 'kt3/lab5',
-          report: null,
+          report: { name: 'Отчет лаб5.docx', path: 'kt3/Отчет лаб5.docx' },
           description:
-            'Выбор пользовательского интерфейса и формы, разработка 10 тестовых сценариев, проведение ручного UI-тестирования, составление отчёта и анализ выявленных дефектов.',
-          tags: ['UI-тестирование', 'Manual QA', '10 сценариев'],
-          files: [],
+            'Ручное UI-тестирование с картой тест-кейсов (TC-1 — TC-10) и автоматизация проверок на Python + Selenium + Pytest в Firefox. Все 10 тестов пройдены (10 passed, 0 дефектов).',
+          tags: ['Python', 'Selenium', 'Pytest', '10 passed'],
+          files: [
+            { name: 'test_login.py', path: 'kt3/lab5/test_login.py', desc: 'Автотесты UI-сценариев TC-1 — TC-10' },
+          ],
         },
       ],
     },
@@ -126,9 +128,13 @@ const SITE_CONFIG = {
 };
 
 const STATUS_META = {
-  done: {
-    label: 'Выполнено',
+  checked: {
+    label: 'Проверено · Оценка',
     classes: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800',
+  },
+  pending_review: {
+    label: 'На проверке',
+    classes: 'bg-sky-100 text-sky-800 dark:bg-sky-950/70 dark:text-sky-300 border border-sky-200 dark:border-sky-800',
   },
   in_progress: {
     label: 'В процессе',
@@ -183,7 +189,9 @@ function renderHeaderAndStats() {
   document.getElementById('repo-link').href = githubRepoUrl();
 
   const allLabs = SITE_CONFIG.checkpoints.flatMap((kt) => kt.labs);
-  const doneLabs = allLabs.filter((l) => l.status === 'done').length;
+  const doneLabs = allLabs.filter(
+    (l) => l.status === 'checked' || l.status === 'pending_review'
+  ).length;
   const totalFiles = allLabs.reduce(
     (sum, lab) => sum + lab.files.length + (lab.report ? 1 : 0),
     0
@@ -283,7 +291,7 @@ function renderContent() {
             <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">${escapeHtml(kt.subtitle)}</p>
           </div>
           ${
-            kt.status === 'done'
+            kt.status === 'checked' || kt.status === 'pending_review'
               ? `<a href="${githubTreeUrl(kt.folder)}" target="_blank" rel="noopener noreferrer"
                     class="text-xs font-mono text-indigo-600 dark:text-indigo-400 hover:underline">
                     /${escapeHtml(kt.folder)}/ ↗
